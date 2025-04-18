@@ -4,7 +4,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 
-describe("Create account (E2E)", () => {
+describe("Create Account (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
 
@@ -16,6 +16,7 @@ describe("Create account (E2E)", () => {
     app = moduleRef.createNestApplication();
 
     prisma = moduleRef.get(PrismaService);
+
     await app.init();
   });
 

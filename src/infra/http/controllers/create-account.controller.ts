@@ -29,13 +29,13 @@ export class CreateAccountController {
       },
     });
 
-    const hashedPassord = await hash(password, 8);
-
     if (userWithSameEmail) {
       throw new ConflictException(
         "User with same e-mail address already exists."
       );
     }
+
+    const hashedPassord = await hash(password, 8);
 
     await this.prisma.user.create({
       data: {

@@ -1,9 +1,8 @@
-import { Student } from "@/domain/forum/enterprise/entities/student";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
 import { Either, left, right } from "@/core/either";
 import { Injectable } from "@nestjs/common";
+import { Student } from "../../enterprise/entities/student";
 import { StudentsRepository } from "../repositories/students-repository";
-import { HasherGenerator } from "../cryptography/hash-generator";
+import { HashGenerator } from "../cryptography/hash-generator";
 import { StudentAlreadyExistsError } from "./errors/student-already-exists-error";
 
 interface RegisterStudentUseCaseRequest {
@@ -23,7 +22,7 @@ type RegisterStudentUseCaseResponse = Either<
 export class RegisterStudentUseCase {
   constructor(
     private studentsRepository: StudentsRepository,
-    private hashGenerator: HasherGenerator
+    private hashGenerator: HashGenerator
   ) {}
 
   async execute({
@@ -39,12 +38,12 @@ export class RegisterStudentUseCase {
       return left(new StudentAlreadyExistsError(email));
     }
 
-    const hashedPassord = await this.hashGenerator.hash(password);
+    const hashedPassword = await this.hashGenerator.hash(password);
 
     const student = Student.create({
       name,
       email,
-      password: hashedPassord,
+      password: hashedPassword,
     });
 
     await this.studentsRepository.create(student);

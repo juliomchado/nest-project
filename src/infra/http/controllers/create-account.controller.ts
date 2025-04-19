@@ -1,8 +1,13 @@
-import { UsePipes } from "@nestjs/common";
+import {
+  BadRequestException,
+  ConflictException,
+  UsePipes,
+} from "@nestjs/common";
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
 import { z } from "zod";
 import { RegisterStudentUseCase } from "@/domain/forum/application/use-cases/register-student";
+import { StudentAlreadyExistsError } from "@/domain/forum/application/use-cases/errors/student-already-exists-error";
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -22,14 +27,21 @@ export class CreateAccountController {
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password } = body;
 
-    const userWithSameEmail = await this.registerStudent.execute({
+    const result = await this.registerStudent.execute({
       name,
       email,
       password,
     });
 
-    if (userWithSameEmail.isLeft()) {
-      throw new Error();
+    if (result.isLeft()) {
+      const error = result.value;
+
+      switch (error.constructor()) {
+        case StudentAlreadyExistsError:
+          throw new ConflictException(error.message);
+        default:
+          throw new BadRequestException(error.message);
+      }
     }
   }
 }

@@ -1,7 +1,6 @@
-import { PaginationParams } from "@/core/repositories/pagination-params";
-import { StudentsRepository } from "@/domain/forum/application/repositories/students-repository";
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma.service";
+import { StudentsRepository } from "@/domain/forum/application/repositories/students-repository";
 import { Student } from "@/domain/forum/enterprise/entities/student";
 import { PrismaStudentMapper } from "../mappers/prisma-student-mapper";
 
@@ -16,7 +15,9 @@ export class PrismaStudentsRepository implements StudentsRepository {
       },
     });
 
-    if (!student) return null;
+    if (!student) {
+      return null;
+    }
 
     return PrismaStudentMapper.toDomain(student);
   }

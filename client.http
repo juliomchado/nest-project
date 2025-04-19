@@ -2,18 +2,18 @@
 @authToken = {{authenticate.response.body.access_token}}
 
 ### 
-
-
 # @name authenticate
 POST {{baseUrl}}/sessions
 Content-Type: application/json
 
 {
     "email": "juliocarlos00@hotmail.com",
-    "password": "123456" 
+    "password": "123456"
 }
 
+### 
 # @name create_account
+
 POST {{baseUrl}}/accounts
 Content-Type: application/json
 

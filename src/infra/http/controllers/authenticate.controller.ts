@@ -1,6 +1,5 @@
 import { Body, Controller, Post, UsePipes } from "@nestjs/common";
 import { ZodValidationPipe } from "@/infra/http/pipes/zod-validation-pipe";
-
 import { z } from "zod";
 import { AuthenticateStudentUseCase } from "@/domain/forum/application/use-cases/authenticate-student";
 

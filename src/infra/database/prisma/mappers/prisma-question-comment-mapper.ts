@@ -1,11 +1,11 @@
-import { Comment as PrismaComment, Prisma } from '@prisma/client'
-import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { QuestionComment } from '@/domain/forum/enterprise/entities/question-comment'
+import { Comment as PrismaComment, Prisma } from "@prisma/client";
+import { UniqueEntityID } from "@/core/entities/unique-entity-id";
+import { QuestionComment } from "@/domain/forum/enterprise/entities/question-comment";
 
 export class PrismaQuestionCommentMapper {
   static toDomain(raw: PrismaComment): QuestionComment {
     if (!raw.questionId) {
-      throw new Error('Invalid comment type.')
+      throw new Error("Invalid comment type.");
     }
 
     return QuestionComment.create(
@@ -16,12 +16,12 @@ export class PrismaQuestionCommentMapper {
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },
-      new UniqueEntityID(raw.id),
-    )
+      new UniqueEntityID(raw.id)
+    );
   }
 
   static toPrisma(
-    questionComment: QuestionComment,
+    questionComment: QuestionComment
   ): Prisma.CommentUncheckedCreateInput {
     return {
       id: questionComment.id.toString(),
@@ -30,6 +30,6 @@ export class PrismaQuestionCommentMapper {
       content: questionComment.content,
       createdAt: questionComment.createdAt,
       updatedAt: questionComment.updatedAt,
-    }
+    };
   }
 }

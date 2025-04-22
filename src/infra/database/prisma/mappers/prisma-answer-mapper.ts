@@ -1,6 +1,6 @@
-import { Answer as PrismaAnswer, Prisma } from "@prisma/client";
-import { UniqueEntityID } from "@/core/entities/unique-entity-id";
-import { Answer } from "@/domain/forum/enterprise/entities/answer";
+import { Answer as PrismaAnswer, Prisma } from '@prisma/client'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Answer } from '@/domain/forum/enterprise/entities/answer'
 
 export class PrismaAnswerMapper {
   static toDomain(raw: PrismaAnswer): Answer {
@@ -12,8 +12,8 @@ export class PrismaAnswerMapper {
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },
-      new UniqueEntityID(raw.id)
-    );
+      new UniqueEntityID(raw.id),
+    )
   }
 
   static toPrisma(answer: Answer): Prisma.AnswerUncheckedCreateInput {
@@ -24,6 +24,6 @@ export class PrismaAnswerMapper {
       content: answer.content,
       createdAt: answer.createdAt,
       updatedAt: answer.updatedAt,
-    };
+    }
   }
 }

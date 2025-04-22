@@ -10,8 +10,8 @@ import {
 import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("/attachments")
-export class GetQuestionBySlugController {
-  //   constructor() {}
+export class UploadAttachmentController {
+  // constructor() {}
 
   @Post()
   @UseInterceptors(FileInterceptor("file"))
@@ -19,11 +19,17 @@ export class GetQuestionBySlugController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [
-          new MaxFileSizeValidator({ maxSize: 1000 }),
-          new FileTypeValidator({ fileType: "image/jpeg" }),
+          new MaxFileSizeValidator({
+            maxSize: 1024 * 1024 * 2, // 2mb
+          }),
+          new FileTypeValidator({
+            fileType: ".(png|jpg|jpeg|pdf)",
+          }),
         ],
       })
     )
     file: Express.Multer.File
-  ) {}
+  ) {
+    console.log(file);
+  }
 }

@@ -22,6 +22,7 @@ import { EditAnswerController } from "./controllers/edit-answer.controller";
 import { EditAnswerUseCase } from "@/domain/forum/application/use-cases/edit-answer";
 import { DeleteAnswerController } from "./controllers/delete-answer.controller";
 import { DeleteAnswerUseCase } from "@/domain/forum/application/use-cases/delete-answer";
+import { UploadAttachmentController } from "./controllers/upload-attachment.controller";
 import { FetchQuestionAnswersController } from "./controllers/fetch-question-answers.controller";
 import { FetchQuestionAnswersUseCase } from "@/domain/forum/application/use-cases/fetch-question-answers";
 import { ChooseQuestionBestAnswerController } from "./controllers/choose-question-best-answer.controller";
@@ -38,9 +39,10 @@ import { FetchQuestionCommentsController } from "./controllers/fetch-question-co
 import { FetchQuestionCommentsUseCase } from "@/domain/forum/application/use-cases/fetch-question-comments";
 import { FetchAnswerCommentsController } from "./controllers/fetch-answer-comments.controller";
 import { FetchAnswerCommentsUseCase } from "@/domain/forum/application/use-cases/fetch-answer-comments";
+import { MulterModule } from "@nestjs/platform-express";
 
 @Module({
-  imports: [DatabaseModule, CryptographyModule],
+  imports: [DatabaseModule, CryptographyModule, MulterModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
@@ -60,6 +62,7 @@ import { FetchAnswerCommentsUseCase } from "@/domain/forum/application/use-cases
     DeleteAnswerCommentController,
     FetchQuestionCommentsController,
     FetchAnswerCommentsController,
+    UploadAttachmentController,
   ],
   providers: [
     CreateQuestionUseCase,

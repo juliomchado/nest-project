@@ -43,5 +43,8 @@ describe("Upload attachment (E2E)", () => {
       .attach("file", filePath);
 
     expect(response.statusCode).toBe(201);
+    expect(response.body).toEqual({
+      attachmentId: expect.any(String),
+    });
   });
 });

@@ -4,15 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import { randomUUID } from "node:crypto";
 import { execSync } from "node:child_process";
 
-config({
-  path: ".env",
-  override: true,
-});
-
-config({
-  path: ".env.test",
-  override: true,
-});
+config({ path: ".env", override: true });
+config({ path: ".env.test", override: true });
 
 const prisma = new PrismaClient();
 
@@ -35,8 +28,8 @@ beforeAll(async () => {
 
   process.env.DATABASE_URL = databaseURL;
 
-  execSync("npx prisma migrate deploy");
-}, 30000);
+  execSync("pnpm prisma migrate deploy");
+});
 
 afterAll(async () => {
   await prisma.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaId}" CASCADE`);

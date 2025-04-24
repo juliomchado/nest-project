@@ -3,7 +3,6 @@ import { DatabaseModule } from "@/infra/database/database.module";
 import { INestApplication } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Test } from "@nestjs/testing";
-import path from "node:path";
 import request from "supertest";
 import { QuestionFactory } from "test/factories/make-question";
 import { StudentFactory } from "test/factories/make-student";
@@ -32,15 +31,10 @@ describe("Upload attachment (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
-    const filePath = path.resolve(
-      process.cwd(),
-      "test/e2e/image/sample-upload.jpg"
-    );
-
     const response = await request(app.getHttpServer())
       .post("/attachments")
       .set("Authorization", `Bearer ${accessToken}`)
-      .attach("file", filePath);
+      .attach("file", "./test/e2e/sample-upload.png");
 
     expect(response.statusCode).toBe(201);
     expect(response.body).toEqual({

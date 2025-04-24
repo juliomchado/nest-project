@@ -1,4 +1,3 @@
-import { QuestionAttachment } from "@/domain/forum/enterprise/entities/question-attachment";
 import { AppModule } from "@/infra/app.module";
 import { DatabaseModule } from "@/infra/database/database.module";
 import { PrismaService } from "@/infra/database/prisma/prisma.service";
@@ -15,9 +14,9 @@ describe("Edit question (E2E)", () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let studentFactory: StudentFactory;
+  let questionFactory: QuestionFactory;
   let attachmentFactory: AttachmentFactory;
   let questionAttachmentFactory: QuestionAttachmentFactory;
-  let questionFactory: QuestionFactory;
   let jwt: JwtService;
 
   beforeAll(async () => {
@@ -48,12 +47,12 @@ describe("Edit question (E2E)", () => {
 
     const accessToken = jwt.sign({ sub: user.id.toString() });
 
+    const attachment1 = await attachmentFactory.makePrismaAttachment();
+    const attachment2 = await attachmentFactory.makePrismaAttachment();
+
     const question = await questionFactory.makePrismaQuestion({
       authorId: user.id,
     });
-
-    const attachment1 = await attachmentFactory.makePrismaAttachment();
-    const attachment2 = await attachmentFactory.makePrismaAttachment();
 
     await questionAttachmentFactory.makePrismaQuestionAttachment({
       attachmentId: attachment1.id,
